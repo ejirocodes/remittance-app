@@ -2,5 +2,12 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import './assets/css/tailwind.css'
+//@ts-ignore;
+import { HTTP as axios } from '@/services/axios.config';
 
-createApp(App).use(router).mount('#app')
+const app = createApp(App);
+
+
+app.config.globalProperties.$http = axios;
+
+app.use(router).mount('#app')
