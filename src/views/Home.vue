@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <h1>Send money to Africa the faster, cheaper way</h1>
+  <div class="home my-9">
+    <h1 class="font-black text-2xl mb-[1rem]">Send money to Africa the faster, cheaper way</h1>
     <SearchForm />
   </div>
 </template>
