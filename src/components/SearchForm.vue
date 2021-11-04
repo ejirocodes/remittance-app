@@ -7,16 +7,20 @@
           placeholder="Where are you sending money to?"
           class="bg-transparent w-full outline-none border-0"
         />
-        <button class="bg-pri text-dark w-2/5 rounded-full font-bold px-5 py-2">Check rate</button>
+        <button class="bg-pri text-dark w-2/5 rounded-full font-bold px-5 py-2 hover:bg-sec transition-all">Check rate</button>
       </div>
     </div>
+    <CountryDropdown />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-
+import CountryDropdown from "@/components/CountryDropdown.vue";
 export default defineComponent({
+  components: {
+    CountryDropdown
+  },
   setup() {
     return {};
   },
