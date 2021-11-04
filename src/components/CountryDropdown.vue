@@ -11,7 +11,7 @@
       -ml-20
     "
   >
-    <ul class="flex flex-col ">
+    <ul class="flex flex-col">
       <li
         v-for="country in countries"
         :key="country.name"
@@ -41,10 +41,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
 
 export default defineComponent({
-  setup() {
+  setup(props, { emit }) {
     const countries = ref([
       {
         name: "Nigeria",
@@ -56,7 +56,7 @@ export default defineComponent({
       {
         name: "Ghana",
         code: "GHS",
-        flag: `🇬🇭`, 
+        flag: `🇬🇭`,
         url: "send-money-to-ghana",
         fastDelivery: false,
       },
@@ -69,7 +69,17 @@ export default defineComponent({
       },
     ]);
 
-    return { countries };
+    watch(countries, () => {
+      emit("update:updateSearch", countries);
+    });
+
+    const countryValue = ref<string>("");
+    const getCountrySearch = () => {
+      console.log("cc");
+      emit("search", countryValue.value);
+    };
+
+    return { countries, getCountrySearch };
   },
 });
 </script>
