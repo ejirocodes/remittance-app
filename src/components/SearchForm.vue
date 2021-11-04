@@ -33,7 +33,7 @@
             hover:bg-sec
             transition-all
           "
-          @click="checkRate()"
+          @click="checkRate('l')"
         >
           Check rate
         </button>
@@ -69,6 +69,7 @@
               w-[24rem]
               border-b border-solid border-gray-200
             "
+            @click="checkRate(country)"
           >
             <div class="flex items-center">
               <span class="inline-block mr-2 text-2xl">{{ country.flag }}</span>
@@ -89,13 +90,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed, getCurrentInstance } from "vue";
 import CountryDropdown from "@/components/CountryDropdown.vue";
+import ApiService from "@/services/api.service";
+
 export default defineComponent({
   components: {
     CountryDropdown,
   },
   setup() {
+    const internalInstance = getCurrentInstance();
+    // @ts-ignore
+    const axios = internalInstance.appContext.config.globalProperties.axios;
+
     const openCountryDropdown = ref<boolean>(false);
     const countryValue = ref<string>("");
     const countries = ref([
@@ -125,13 +132,17 @@ export default defineComponent({
     const toggleCountryDropdown = () => {
       openCountryDropdown.value = true;
     };
-    const checkRate = () => {
-      openCountryDropdown.value = true;
+    const checkRate = async (country: any) => {
+
+      const { data } = await ApiService.getRates(axios);
+      console.log(data.rates[country.code]);
+
+      // openCountryDropdown.value = true;
     };
 
-     const searchCountry = computed(() => {
-       return countries.value.filter((country) => {
-       return country.name.match(new RegExp(countryValue.value, 'i'));
+    const searchCountry = computed(() => {
+      return countries.value.filter((country) => {
+        return country.name.match(new RegExp(countryValue.value, "i"));
       });
     });
 
