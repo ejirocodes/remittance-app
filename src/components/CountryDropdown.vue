@@ -8,9 +8,10 @@
       inline-flex
       items-center
       justify-center
+      -ml-20
     "
   >
-    <ul class="">
+    <ul class="flex flex-col ">
       <li
         v-for="country in countries"
         :key="country.name"
@@ -50,6 +51,20 @@ export default defineComponent({
         code: "NGN",
         flag: "🇳🇬",
         url: "send-money-to-nigeria",
+        fastDelivery: true,
+      },
+      {
+        name: "Ghana",
+        code: "GHS",
+        flag: `🇬🇭`, 
+        url: "send-money-to-ghana",
+        fastDelivery: false,
+      },
+      {
+        name: "Kenya",
+        code: "KES",
+        flag: `🇰🇪`,
+        url: "send-money-to-kenya",
         fastDelivery: true,
       },
     ]);
