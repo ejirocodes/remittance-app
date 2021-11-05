@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 @layer components {
-    .transaction-display {
-      @apply bg-light w-full border border-solid border-gray-300 rounded py-3 px-5;
-    }
+  .transaction-display {
+    @apply bg-light w-full border border-solid border-gray-300 rounded py-3 px-5;
   }
+  .disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+}

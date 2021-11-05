@@ -95,6 +95,8 @@
               hover:bg-sec
               transition-all
             "
+            :disabled="isProcessing"
+            :class="[{ disabled: isProcessing }]"
             @click="processPayment()"
           >
             <span v-if="isProcessing">Processing</span>
