@@ -9,7 +9,7 @@
           Send money to {{ selectedCountry.name }} {{ selectedCountry.flag }}
         </h1>
         <p class="text-lg">
-          Fast, cheap online money transfers to {{ selectedCountry.name }}. 
+          Fast, cheap online money transfers to {{ selectedCountry.name }}.
         </p>
       </div>
       <div class="w-3/5">
@@ -97,11 +97,12 @@
             "
             @click="processPayment()"
           >
-            Send now
+            <span v-if="isProcessing">Processing</span>
+            <span v-else>Send now</span>
           </button>
         </div>
       </div>
-      <PaymentSuccessModal :open="openModal"   @modalState="modalState($event)"/>
+      <PaymentSuccessModal :open="openModal" @modalState="modalState($event)" />
     </section>
   </div>
 </template>
@@ -117,11 +118,12 @@ import {
 import { useRoute } from "vue-router";
 import ApiService from "@/services/api.service";
 import { useRouter } from "vue-router";
-import PaymentSuccessModal from '@/components/shared/PaymentSuccessModal.vue'
+import PaymentSuccessModal from "@/components/shared/PaymentSuccessModal.vue";
+
 export default defineComponent({
   name: "SendMoney",
   components: {
-      PaymentSuccessModal
+    PaymentSuccessModal,
   },
   setup() {
     let route = useRoute();
@@ -132,8 +134,7 @@ export default defineComponent({
     const sendAmouut = ref(500);
     const currentRate = ref(2);
     const openModal = ref(false);
-    
-
+    const isProcessing = ref(false);
 
     const countries = ref([
       {
@@ -171,9 +172,9 @@ export default defineComponent({
       );
     });
 
-     const modalState = (openState)  => {
+    const modalState = (openState) => {
       openModal.value = openState;
-    }
+    };
 
     const getRate = async () => {
       const { data } = await ApiService.getRates(axios);
@@ -181,8 +182,11 @@ export default defineComponent({
     };
 
     const processPayment = async () => {
-        openModal.value = true
-        console.log(openModal.value);
+      isProcessing.value = true;
+      setTimeout(() => {
+        isProcessing.value = false;
+        openModal.value = true;
+      }, 3000);
     };
 
     onMounted(() => {
@@ -192,6 +196,7 @@ export default defineComponent({
     return {
       selectedCountry,
       processPayment,
+      isProcessing,
       openModal,
       route,
       sendAmouut,
