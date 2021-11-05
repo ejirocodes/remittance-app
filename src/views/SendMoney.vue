@@ -101,7 +101,7 @@
           </button>
         </div>
       </div>
-      <PaymentSuccessModal />
+      <PaymentSuccessModal :open="openModal"   @modalState="modalState($event)"/>
     </section>
   </div>
 </template>
@@ -127,10 +127,12 @@ export default defineComponent({
     let route = useRoute();
     let router = useRouter();
     const internalInstance = getCurrentInstance();
+    const axios = internalInstance.appContext.config.globalProperties.axios;
 
     const sendAmouut = ref(500);
     const currentRate = ref(2);
-    const axios = internalInstance.appContext.config.globalProperties.axios;
+    const openModal = ref(false);
+    
 
 
     const countries = ref([
@@ -169,13 +171,18 @@ export default defineComponent({
       );
     });
 
+     const modalState = (openState)  => {
+      openModal.value = openState;
+    }
+
     const getRate = async () => {
       const { data } = await ApiService.getRates(axios);
       currentRate.value = data.rates[selectedCountry.value.code];
     };
 
     const processPayment = async () => {
-      
+        openModal.value = true
+        console.log(openModal.value);
     };
 
     onMounted(() => {
@@ -185,10 +192,12 @@ export default defineComponent({
     return {
       selectedCountry,
       processPayment,
+      openModal,
       route,
       sendAmouut,
       receivedAmouut,
       currentRate,
+      modalState,
       router,
     };
   },
