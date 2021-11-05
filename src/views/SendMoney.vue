@@ -1,18 +1,18 @@
 <template>
   <div class="text-left">
-    <button class="p-3 font-bold" @click="router.back()">Back</button>
+    <button class="font-bold" @click="router.back()">Back</button>
     <section
-      class="text-left lg:px-24 lg:py-16 flex items-center justify-between"
+      class="text-left lg:px-24 lg:py-16 flex items-center sm:flex-row flex-col justify-between"
     >
-      <div class="w-full">
-        <h1 class="font-black text-4xl mb-[0.5rem]">
+      <div class="w-full md:mb-0 mb-10 md:text-left text-center">
+        <h1 class="font-black text-4xl mb-[0.5rem] md:mt-0 mt-4">
           Send money to {{ selectedCountry.name }} {{ selectedCountry.flag }}
         </h1>
         <p class="text-lg">
           Fast, cheap online money transfers to {{ selectedCountry.name }}.
         </p>
       </div>
-      <div class="w-3/5">
+      <div class="md:w-3/5 w-full">
         <div
           class="
             text-center
