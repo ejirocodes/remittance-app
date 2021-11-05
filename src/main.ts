@@ -5,12 +5,8 @@ import './assets/css/tailwind.css'
 //@ts-ignore;
 import { HTTP as axios } from './services/axios.config';
 
-const app = createApp(App);
-
+const app = createApp(App).use(router);
 
 app.config.globalProperties.axios = axios
-
-console.log(axios);
-
 
 app.use(router).mount('#app')

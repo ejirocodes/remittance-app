@@ -22,7 +22,10 @@
           p-3
           w-[24rem]
           border-b border-solid border-gray-200
+          cursor-pointer
+          hover:bg-gray-100
         "
+        @click="getRate(country)"
       >
         <div class="flex items-center">
           <span class="inline-block mr-2 text-2xl">{{ country.flag }}</span>
@@ -41,45 +44,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, getCurrentInstance } from "vue";
+import ApiService from "@/services/api.service";
 
 export default defineComponent({
+  props: {
+    countries: {
+      type: Array,
+      required: true,
+    },
+    // selectedCountry: {
+    //   type: Object,
+    //   required: true
+    // }
+  },
   setup(props, { emit }) {
-    const countries = ref([
-      {
-        name: "Nigeria",
-        code: "NGN",
-        flag: "🇳🇬",
-        url: "send-money-to-nigeria",
-        fastDelivery: true,
-      },
-      {
-        name: "Ghana",
-        code: "GHS",
-        flag: `🇬🇭`,
-        url: "send-money-to-ghana",
-        fastDelivery: false,
-      },
-      {
-        name: "Kenya",
-        code: "KES",
-        flag: `🇰🇪`,
-        url: "send-money-to-kenya",
-        fastDelivery: true,
-      },
-    ]);
+    const internalInstance = getCurrentInstance();
+    // @ts-ignore
+    const axios = internalInstance.appContext.config.globalProperties.axios;
 
-    watch(countries, () => {
-      emit("update:updateSearch", countries);
-    });
-
-    const countryValue = ref<string>("");
-    const getCountrySearch = () => {
-      console.log("cc");
-      emit("search", countryValue.value);
+    const getRate = async (country: any) => {
+      const { data } = await ApiService.getRates(axios);
+      console.log(data.rates[country.code]);
     };
-
-    return { countries, getCountrySearch };
+    return { getRate };
   },
 });
 </script>

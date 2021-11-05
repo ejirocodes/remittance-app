@@ -33,76 +33,31 @@
             hover:bg-sec
             transition-all
           "
-          @click="checkRate('l')"
+          @click="toggleCountryDropdown"
         >
           Check rate
         </button>
       </div>
     </div>
-    <div @click.self="openCountryDropdown = false" class="h-screen w-screen">
-      <!-- <CountryDropdown
+    <div @click.self="openCountryDropdown = false" class="h-screen w-screen ">
+      <CountryDropdown
         v-if="openCountryDropdown"
-       @updateSearch="updateSearch($event)"
-      /> -->
-      <div
-        v-if="openCountryDropdown"
-        class="
-          z-10
-          -mt-1
-          bg-white
-          shadow-2xl
-          inline-flex
-          items-center
-          justify-center
-          -ml-20
-        "
-      >
-        <ul class="flex flex-col">
-          <li
-            v-for="country in searchCountry"
-            :key="country.name"
-            class="
-              inline-flex
-              items-center
-              justify-between
-              p-3
-              w-[24rem]
-              border-b border-solid border-gray-200
-            "
-            @click="checkRate(country)"
-          >
-            <div class="flex items-center">
-              <span class="inline-block mr-2 text-2xl">{{ country.flag }}</span>
-              <span class="country-picker_option_text">
-                <strong>{{ country.name }}</strong>
-              </span>
-            </div>
-            <span
-              class="bg-green-100 inline-block px-2 py-1 text-sm text-black"
-              v-show="country.fastDelivery"
-              >Fast delivery</span
-            >
-          </li>
-        </ul>
-      </div>
+        :countries="searchCountry"
+      />      
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, getCurrentInstance } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import CountryDropdown from "@/components/CountryDropdown.vue";
-import ApiService from "@/services/api.service";
 
 export default defineComponent({
   components: {
     CountryDropdown,
   },
   setup() {
-    const internalInstance = getCurrentInstance();
-    // @ts-ignore
-    const axios = internalInstance.appContext.config.globalProperties.axios;
-
+ 
     const openCountryDropdown = ref<boolean>(false);
     const countryValue = ref<string>("");
     const countries = ref([
@@ -132,13 +87,7 @@ export default defineComponent({
     const toggleCountryDropdown = () => {
       openCountryDropdown.value = true;
     };
-    const checkRate = async (country: any) => {
-
-      const { data } = await ApiService.getRates(axios);
-      console.log(data.rates[country.code]);
-
-      // openCountryDropdown.value = true;
-    };
+  
 
     const searchCountry = computed(() => {
       return countries.value.filter((country) => {
@@ -156,7 +105,6 @@ export default defineComponent({
       countryValue,
       countries,
       searchCountry,
-      checkRate,
       toggleCountryDropdown,
       updateSearch,
     };
