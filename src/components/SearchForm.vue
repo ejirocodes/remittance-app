@@ -54,6 +54,7 @@ export default defineComponent({
     CountryDropdown,
   },
   setup() {
+    name: "SearchForm";
     const openCountryDropdown = ref<boolean>(false);
     const countryValue = ref<string>("");
     const countries = ref([
@@ -92,18 +93,12 @@ export default defineComponent({
       });
     });
 
-    const updateSearch = (e: CustomEvent) => {
-      countryValue.value = e.detail;
-      console.log(e);
-    };
-
     return {
       openCountryDropdown,
       countryValue,
       countries,
       searchCountry,
       toggleCountryDropdown,
-      updateSearch,
     };
   },
 });

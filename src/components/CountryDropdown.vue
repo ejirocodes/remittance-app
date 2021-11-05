@@ -25,19 +25,23 @@
           cursor-pointer
           hover:bg-gray-100
         "
-        @click="getRate(country)"
       >
-        <div class="flex items-center">
-          <span class="inline-block mr-2 text-2xl">{{ country.flag }}</span>
-          <span class="country-picker_option_text">
-            <strong>{{ country.name }}</strong>
-          </span>
-        </div>
-        <span
-          class="bg-green-100 inline-block px-2 py-1 text-sm text-black"
-          v-show="country.fastDelivery"
-          >Fast delivery</span
-        >
+        <router-link :to="`/send-money/${country.name.toLowerCase()}`" class="inline-flex
+          items-center
+          justify-between w-full">
+          <!-- @click="getRate(country)" -->
+          <div class="flex items-center">
+            <span class="inline-block mr-2 text-2xl">{{ country.flag }}</span>
+            <span class="country-picker_option_text">
+              <strong>{{ country.name }}</strong>
+            </span>
+          </div>
+          <span
+            class="bg-green-100 inline-block px-2 py-1 text-sm text-black"
+            v-show="country.fastDelivery"
+            >Fast delivery</span
+          >
+        </router-link>
       </li>
     </ul>
   </div>
