@@ -21,7 +21,8 @@
           items-center
           justify-between
           p-3
-          w-[24rem]
+          sm:w-[24rem]
+          w-[20rem]
           border-b border-solid border-gray-200
           cursor-pointer
           hover:bg-gray-100
