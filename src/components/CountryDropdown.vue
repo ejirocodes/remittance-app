@@ -26,9 +26,10 @@
           hover:bg-gray-100
         "
       >
-        <router-link :to="`/send-money/${country.name.toLowerCase()}`" class="inline-flex
-          items-center
-          justify-between w-full">
+        <router-link
+          :to="`/send-money/${country.name.toLowerCase()}`"
+          class="inline-flex items-center justify-between w-full"
+        >
           <!-- @click="getRate(country)" -->
           <div class="flex items-center">
             <span class="inline-block mr-2 text-2xl">{{ country.flag }}</span>
@@ -49,7 +50,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, getCurrentInstance } from "vue";
-import ApiService from "@/services/api.service";
+// import ApiService from "@/services/api.service";
 
 export default defineComponent({
   props: {
@@ -63,15 +64,15 @@ export default defineComponent({
     // }
   },
   setup(props, { emit }) {
-    const internalInstance = getCurrentInstance();
-    // @ts-ignore
-    const axios = internalInstance.appContext.config.globalProperties.axios;
+    // const internalInstance = getCurrentInstance();
+    // // @ts-ignore
+    // const axios = internalInstance.appContext.config.globalProperties.axios;
 
-    const getRate = async (country: any) => {
-      const { data } = await ApiService.getRates(axios);
-      console.log(data.rates[country.code]);
-    };
-    return { getRate };
+    // const getRate = async (country: any) => {
+    //   const { data } = await ApiService.getRates(axios);
+    //   console.log(data.rates[country.code]);
+    // };
+    // return { getRate };
   },
 });
 </script>

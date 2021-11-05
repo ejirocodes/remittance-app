@@ -1,94 +1,132 @@
 <template>
-  <section
-    class="text-left lg:px-24 lg:py-16 flex items-center justify-between"
-  >
-    <div class="w-full">
-      <h1 class="font-black text-4xl mb-[0.5rem]">
-        Send money to {{ selectedCountry.name }}
-      </h1>
-      <p class="text-lg">
-        Fast, cheap online money transfers to {{ selectedCountry.name }}.
-      </p>
-    </div>
-    <div class="w-3/5">
-      <div class="text-center py-8 bg-secdark text-white rounded-lg font-black text-2xl mb-4">1 USD = {{1.33961}} {{ selectedCountry.code }}</div>
-      <div class="shadow-2xl px-4 py-8 rounded-lg border border-solid border-gray-300 bg-white">
+  <div class="text-left">
+    <button class="p-3 font-bold" @click="router.back()">Back</button>
+    <section
+      class="text-left lg:px-24 lg:py-16 flex items-center justify-between"
+    >
+      <div class="w-full">
+        <h1 class="font-black text-4xl mb-[0.5rem]">
+          Send money to {{ selectedCountry.name }}
+        </h1>
+        <p class="text-lg">
+          Fast, cheap online money transfers to {{ selectedCountry.name }}.
+        </p>
+      </div>
+      <div class="w-3/5">
         <div
-          class="transaction-display mb-4"
-          v-if="selectedCountry.fastDelivery"
-        >
-          <p class="text-sm text-gray-500">Delivery</p>
-          <div>
-            <div class="font-black text-xl">SWIFT</div>
-          </div>
-        </div>
-        <div class="transaction-display mb-4">
-          <p class="text-sm text-gray-500">You send (USD)</p>
-          <div>
-            <input
-              type="text"
-              class="
-                font-black
-                text-xl
-                bg-transparent
-                w-full
-                outline-none
-                border-0
-              "
-              v-model="sendAmouut"
-            />
-          </div>
-        </div>
-        <div class="transaction-display mb-8">
-          <p class="text-sm text-gray-500">
-            They get ({{ selectedCountry.code }})
-          </p>
-          <div>
-            <input
-              type="text"
-              class="
-                font-black
-                text-xl
-                bg-transparent
-                w-full
-                outline-none
-                border-0
-              "
-              readonly
-              v-model="receivedAmouut"
-            />
-          </div>
-        </div>
-        <button
           class="
-            bg-pri
-            text-dark
-            w-full
-            rounded-full
-            font-bold
-            px-5
-            py-4
-            hover:bg-sec
-            transition-all
+            text-center
+            py-8
+            bg-secdark
+            text-white
+            rounded-lg
+            font-black
+            text-2xl
+            mb-4
           "
         >
-          Send now
-        </button>
+          1 USD = {{ currentRate }} {{ selectedCountry.code }}
+        </div>
+        <div
+          class="
+            shadow-2xl
+            px-4
+            py-8
+            rounded-lg
+            border border-solid border-gray-300
+            bg-white
+          "
+        >
+          <div
+            class="transaction-display mb-4"
+            v-if="selectedCountry.fastDelivery"
+          >
+            <p class="text-sm text-gray-500">Delivery</p>
+            <div>
+              <div class="font-black text-xl">SWIFT</div>
+            </div>
+          </div>
+          <div class="transaction-display mb-4">
+            <p class="text-sm text-gray-500">You send (USD)</p>
+            <div>
+              <input
+                type="text"
+                class="
+                  font-black
+                  text-xl
+                  bg-transparent
+                  w-full
+                  outline-none
+                  border-0
+                "
+                v-model="sendAmouut"
+              />
+            </div>
+          </div>
+          <div class="transaction-display mb-8">
+            <p class="text-sm text-gray-500">
+              They get ({{ selectedCountry.code }})
+            </p>
+            <div>
+              <input
+                type="text"
+                class="
+                  font-black
+                  text-xl
+                  bg-transparent
+                  w-full
+                  outline-none
+                  border-0
+                "
+                readonly
+                v-model="receivedAmouut"
+              />
+            </div>
+          </div>
+          <button
+            class="
+              bg-pri
+              text-dark
+              w-full
+              rounded-full
+              font-bold
+              px-5
+              py-4
+              hover:bg-sec
+              transition-all
+            "
+          >
+            Send now
+          </button>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+import {
+  defineComponent,
+  ref,
+  computed,
+  onMounted,
+  getCurrentInstance,
+} from "vue";
 import { useRoute } from "vue-router";
-
+import ApiService from "@/services/api.service";
+import { useRouter } from "vue-router";
 export default defineComponent({
   name: "SendMoney",
   setup() {
     let route = useRoute();
+    let router = useRouter();
+    const internalInstance = getCurrentInstance();
+
     const sendAmouut = ref<string>("300");
     const receivedAmouut = ref<string>("9000");
+    const currentRate = ref<number>();
+    // @ts-ignore
+    const axios = internalInstance.appContext.config.globalProperties.axios;
     const countries = ref([
       {
         name: "Nigeria",
@@ -119,7 +157,25 @@ export default defineComponent({
       );
     });
 
-    return { selectedCountry, route, sendAmouut, receivedAmouut };
+    const getRate = async () => {
+      const { data } = await ApiService.getRates(axios);
+      // @ts-ignore
+      currentRate.value = data.rates[selectedCountry.value.code];
+      console.log(currentRate.value);
+    };
+
+    onMounted(() => {
+      getRate();
+    });
+
+    return {
+      selectedCountry,
+      route,
+      sendAmouut,
+      receivedAmouut,
+      currentRate,
+      router,
+    };
   },
 });
 </script>

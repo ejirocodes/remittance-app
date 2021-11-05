@@ -55,7 +55,7 @@ export default defineComponent({
   },
   setup() {
     name: "SearchForm";
-    const openCountryDropdown = ref<boolean>(false);
+    const openCountryDropdown = ref<boolean>(true);
     const countryValue = ref<string>("");
     const countries = ref([
       {
