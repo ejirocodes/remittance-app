@@ -8,7 +8,7 @@
       <div
         class="
           flex
-          items-end
+          items-center
           justify-center
           min-h-screen
           pt-4
