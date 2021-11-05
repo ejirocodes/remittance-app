@@ -39,11 +39,8 @@
         </button>
       </div>
     </div>
-    <div @click.self="openCountryDropdown = false" class="h-screen w-screen ">
-      <CountryDropdown
-        v-if="openCountryDropdown"
-        :countries="searchCountry"
-      />      
+    <div @click.self="openCountryDropdown = false" class="h-screen w-screen">
+      <CountryDropdown v-if="openCountryDropdown" :countries="searchCountry" />
     </div>
   </div>
 </template>
@@ -57,7 +54,6 @@ export default defineComponent({
     CountryDropdown,
   },
   setup() {
- 
     const openCountryDropdown = ref<boolean>(false);
     const countryValue = ref<string>("");
     const countries = ref([
@@ -87,11 +83,12 @@ export default defineComponent({
     const toggleCountryDropdown = () => {
       openCountryDropdown.value = true;
     };
-  
 
     const searchCountry = computed(() => {
       return countries.value.filter((country) => {
-        return country.name.match(new RegExp(countryValue.value, "i"));
+        return country.name
+          .toLowerCase()
+          .includes(countryValue.value.toLowerCase());
       });
     });
 
