@@ -123,8 +123,8 @@ export default defineComponent({
     const internalInstance = getCurrentInstance();
 
     const sendAmouut = ref<string>("300");
-    const receivedAmouut = ref<string>("9000");
-    const currentRate = ref<number>();
+    const currentRate = ref<number>(2);
+    
     // @ts-ignore
     const axios = internalInstance.appContext.config.globalProperties.axios;
     const countries = ref([
@@ -150,6 +150,10 @@ export default defineComponent({
         fastDelivery: true,
       },
     ]);
+
+    const receivedAmouut = computed(() => {
+      return (Number(sendAmouut.value) * currentRate.value).toFixed(2);
+    });
 
     const selectedCountry = computed(() => {
       return countries.value.find(
