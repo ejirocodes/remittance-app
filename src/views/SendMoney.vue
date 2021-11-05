@@ -6,10 +6,10 @@
     >
       <div class="w-full">
         <h1 class="font-black text-4xl mb-[0.5rem]">
-          Send money to {{ selectedCountry.name }}
+          Send money to {{ selectedCountry.name }} {{ selectedCountry.flag }}
         </h1>
         <p class="text-lg">
-          Fast, cheap online money transfers to {{ selectedCountry.name }}.
+          Fast, cheap online money transfers to {{ selectedCountry.name }}. 
         </p>
       </div>
       <div class="w-3/5">
@@ -50,7 +50,7 @@
             <p class="text-sm text-gray-500">You send (USD)</p>
             <div>
               <input
-                type="text"
+                type="number"
                 class="
                   font-black
                   text-xl
@@ -95,16 +95,18 @@
               hover:bg-sec
               transition-all
             "
+            @click="processPayment()"
           >
             Send now
           </button>
         </div>
       </div>
+      <PaymentSuccessModal />
     </section>
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import {
   defineComponent,
   ref,
@@ -115,18 +117,22 @@ import {
 import { useRoute } from "vue-router";
 import ApiService from "@/services/api.service";
 import { useRouter } from "vue-router";
+import PaymentSuccessModal from '@/components/shared/PaymentSuccessModal.vue'
 export default defineComponent({
   name: "SendMoney",
+  components: {
+      PaymentSuccessModal
+  },
   setup() {
     let route = useRoute();
     let router = useRouter();
     const internalInstance = getCurrentInstance();
 
-    const sendAmouut = ref<number>(500);
-    const currentRate = ref<number>(2);
-
-    // @ts-ignore
+    const sendAmouut = ref(500);
+    const currentRate = ref(2);
     const axios = internalInstance.appContext.config.globalProperties.axios;
+
+
     const countries = ref([
       {
         name: "Nigeria",
@@ -165,9 +171,11 @@ export default defineComponent({
 
     const getRate = async () => {
       const { data } = await ApiService.getRates(axios);
-      // @ts-ignore
       currentRate.value = data.rates[selectedCountry.value.code];
-      console.log(currentRate.value);
+    };
+
+    const processPayment = async () => {
+      
     };
 
     onMounted(() => {
@@ -176,6 +184,7 @@ export default defineComponent({
 
     return {
       selectedCountry,
+      processPayment,
       route,
       sendAmouut,
       receivedAmouut,

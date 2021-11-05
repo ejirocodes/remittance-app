@@ -48,9 +48,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, getCurrentInstance } from "vue";
-// import ApiService from "@/services/api.service";
+<script lang="js">
+import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
@@ -58,21 +57,6 @@ export default defineComponent({
       type: Array,
       required: true,
     },
-    // selectedCountry: {
-    //   type: Object,
-    //   required: true
-    // }
-  },
-  setup(props, { emit }) {
-    // const internalInstance = getCurrentInstance();
-    // // @ts-ignore
-    // const axios = internalInstance.appContext.config.globalProperties.axios;
-
-    // const getRate = async (country: any) => {
-    //   const { data } = await ApiService.getRates(axios);
-    //   console.log(data.rates[country.code]);
-    // };
-    // return { getRate };
   },
 });
 </script>
