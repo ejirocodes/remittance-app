@@ -122,9 +122,9 @@ export default defineComponent({
     let router = useRouter();
     const internalInstance = getCurrentInstance();
 
-    const sendAmouut = ref<string>("300");
+    const sendAmouut = ref<number>(500);
     const currentRate = ref<number>(2);
-    
+
     // @ts-ignore
     const axios = internalInstance.appContext.config.globalProperties.axios;
     const countries = ref([
@@ -152,7 +152,9 @@ export default defineComponent({
     ]);
 
     const receivedAmouut = computed(() => {
-      return (Number(sendAmouut.value) * currentRate.value).toFixed(2);
+      return (Number(sendAmouut.value) * currentRate.value).toLocaleString(
+        "en-US"
+      );
     });
 
     const selectedCountry = computed(() => {
