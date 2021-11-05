@@ -8,7 +8,8 @@
       inline-flex
       items-center
       justify-center
-      -ml-20
+      sm:-ml-20
+      ml-0
     "
   >
     <ul class="flex flex-col">

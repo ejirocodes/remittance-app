@@ -1,5 +1,5 @@
 <template>
-  <div class="text-left">
+  <div class="text-left sm:p-[2rem] p-[1rem]">
     <button class="font-bold" @click="router.back()">Back</button>
     <section
       class="text-left lg:px-24 lg:py-16 flex items-center sm:flex-row flex-col justify-between"

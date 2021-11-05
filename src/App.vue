@@ -1,7 +1,5 @@
 <template>
-  <div class="p-[2rem]">
     <router-view />
-  </div>
 </template>
 
 <style>

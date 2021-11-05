@@ -41,7 +41,7 @@
         </button>
       </div>
     </div>
-    <div @click.self="openCountryDropdown = false" class="h-screen w-screen">
+    <div @click.self="openCountryDropdown = false" class="sm:h-screen sm:w-screen h-full w-full">
       <CountryDropdown v-if="openCountryDropdown" :countries="searchCountry" />
     </div>
   </div>

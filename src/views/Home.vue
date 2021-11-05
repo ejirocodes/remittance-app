@@ -1,5 +1,5 @@
 <template>
-  <div class="home my-9 p-[2rem]">
+  <div class="home my-9 sm:p-[2rem] p-[1rem]">
     <h1 class="font-black text-2xl mb-[1.5rem]">Send money from USA to Africa the faster, cheaper way</h1>
     <SearchForm />
   </div>
