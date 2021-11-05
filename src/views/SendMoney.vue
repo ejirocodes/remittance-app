@@ -11,7 +11,8 @@
       </p>
     </div>
     <div class="w-3/5">
-      <div class="shadow-2xl px-4 py-8">
+      <div class="text-center py-8 bg-secdark text-white rounded-lg font-black text-2xl mb-4">1 USD = {{1.33961}} {{ selectedCountry.code }}</div>
+      <div class="shadow-2xl px-4 py-8 rounded-lg border border-solid border-gray-300 bg-white">
         <div
           class="transaction-display mb-4"
           v-if="selectedCountry.fastDelivery"
