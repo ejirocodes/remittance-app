@@ -8,7 +8,8 @@
           inline-flex
           items-center
           justify-between
-          w-2/6
+          lg:w-2/6
+          w-full
           py-[0.8rem]
           px-[1.5rem]
           shadow-2xl
@@ -25,7 +26,8 @@
           class="
             bg-pri
             text-dark
-            w-2/5
+            xl:w-2/5
+            w-full
             rounded-full
             font-bold
             px-5
