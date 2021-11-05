@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .transaction-display {
+      @apply bg-light w-full border border-solid border-gray-300 rounded py-3 px-5;
+    }
+  }
