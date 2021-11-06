@@ -32,7 +32,6 @@
           />
         </TransitionChild>
 
-        <!-- This element is to trick the browser into centering the modal contents. -->
         <span
           class="hidden sm:inline-block sm:align-middle sm:h-screen"
           aria-hidden="true"
@@ -88,7 +87,7 @@
                 </DialogTitle>
                 <div class="mt-2">
                   <p class="text-sm text-gray-500">
-                    Your payment is being processed and will be completed withing 30 minutes to one hour.
+                    Your payment is being processed and will be completed within 30 minutes to one hour.
                   </p>
                 </div>
               </div>
