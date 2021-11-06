@@ -20,7 +20,6 @@
           inline-flex
           items-center
           justify-between
-          p-3
           sm:w-[24rem]
           w-[20rem]
           border-b border-solid border-gray-200
@@ -30,7 +29,14 @@
       >
         <router-link
           :to="`/send-money/${country.name.toLowerCase()}`"
-          class="inline-flex items-center justify-between w-full"
+          class="
+            inline-flex
+            p-3
+            cursor-pointer
+            items-center
+            justify-between
+            w-full
+          "
         >
           <!-- @click="getRate(country)" -->
           <div class="flex items-center">
