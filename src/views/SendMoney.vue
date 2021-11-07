@@ -37,6 +37,57 @@
             bg-white
           "
         >
+        <div class="transaction-display mb-4">
+            <p class="text-sm text-gray-500">Account Name</p>
+            <div>
+              <input
+                type="text"
+                class="
+                  font-black
+                  text-xl
+                  bg-transparent
+                  w-full
+                  outline-none
+                  border-0
+                "
+                v-model="accountName"
+              />
+            </div>
+          </div>
+        <div class="transaction-display mb-4">
+            <p class="text-sm text-gray-500">Account Number</p>
+            <div>
+              <input
+                type="number"
+                class="
+                  font-black
+                  text-xl
+                  bg-transparent
+                  w-full
+                  outline-none
+                  border-0
+                "
+                v-model="accountNumber"
+              />
+            </div>
+          </div>
+        <div class="transaction-display mb-4">
+            <p class="text-sm text-gray-500">Swift Code</p>
+            <div>
+              <input
+                type="text"
+                class="
+                  font-black
+                  text-xl
+                  bg-transparent
+                  w-full
+                  outline-none
+                  border-0
+                "
+                v-model="swiftCode"
+              />
+            </div>
+          </div>
           <div
             class="transaction-display mb-4"
             v-if="selectedCountry.fastDelivery"
@@ -79,7 +130,7 @@
                   border-0
                 "
                 readonly
-                v-model="receivedAmouut"
+                v-model="receivedAmount"
               />
             </div>
           </div>
@@ -137,6 +188,9 @@ export default defineComponent({
     const currentRate = ref(2);
     const openModal = ref(false);
     const isProcessing = ref(false);
+    const accountName = ref('Ejiro Asiuwhu');
+    const accountNumber = ref(1234567890);
+    const swiftCode = ref('GTBINGLAXXX');
 
     const countries = ref([
       {
@@ -162,7 +216,7 @@ export default defineComponent({
       },
     ]);
 
-    const receivedAmouut = computed(() => {
+    const receivedAmount = computed(() => {
       return (Number(sendAmouut.value) * currentRate.value).toLocaleString(
         "en-US"
       );
@@ -202,7 +256,10 @@ export default defineComponent({
       openModal,
       route,
       sendAmouut,
-      receivedAmouut,
+      accountName,
+      accountNumber,
+      receivedAmount,
+      swiftCode,
       currentRate,
       modalState,
       router,
